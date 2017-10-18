@@ -18,5 +18,5 @@ class exam_pack_item(scrapy.Item):
 	docs = scrapy.Field()
 
 class course_item(scrapy.Item):
-    course = scrapy.Field()
+    course_name = scrapy.Field()
     packs = scrapy.Field()
