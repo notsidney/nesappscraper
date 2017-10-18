@@ -7,8 +7,8 @@ from ..items import course_item, exam_pack_item, doc_item
 
 class NesaPPSpider(scrapy.Spider):
     name = "nesapp"
-    #start_urls = ['http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers']
-    start_urls = ['file:///C:/Users/Sidney%20Alcantara/Desktop/test.html']
+    start_urls = ['http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers']
+    #start_urls = ['file:///C:/Users/Sidney%20Alcantara/Desktop/test.html']
 
     def __init__(self):
         dispatcher.connect(self.output, signals.spider_closed)
