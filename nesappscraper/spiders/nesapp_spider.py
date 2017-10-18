@@ -10,9 +10,6 @@ class NesaPPSpider(scrapy.Spider):
     start_urls = ['http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers']
     #start_urls = ['file:///C:/Users/Sidney%20Alcantara/Desktop/test.html']
 
-    # def __init__(self):
-    #     dispatcher.connect(self.output, signals.spider_closed)
-
     def parse(self, response):
         # create list of course names
         global course_names
@@ -65,22 +62,4 @@ class NesaPPSpider(scrapy.Spider):
         exam_pack_item = response.meta['exam_pack_item']
         exam_pack_item['docs'] = doc_items
 
-        # # gets index of corresponding course item
-        # index = course_names.index(response.meta['course'])
-        # # append current exam pack item
-        # exam_pack_items[index].append( exam_pack_item )
         yield exam_pack_item
-
-    # def output(self):
-    #     logging.warning('output')
-        # for i in range(len(course_names)):
-        #     course_item_output = course_item()
-        #     course_item_output['course'] = course_names[i]
-        #     course_item_output['packs'] = exam_pack_items[i]
-        #     logging.warning(course_item_output)
-
-        #     itemproc = self.crawler.engine.scraper.itemproc
-        #     itemproc.process_item(course_item_output, self)
-
-        #     return course_item_output
-        #     yield course_item_output

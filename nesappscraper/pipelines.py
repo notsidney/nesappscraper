@@ -15,7 +15,7 @@ class NesappscraperPipeline(object):
         global exam_pack_list
         exam_pack_list = []
 
-        self.file = open('test.json', 'w')
+        self.file = open('data.json', 'w')
 
     def process_item(self, item, spider):
         placed = False
