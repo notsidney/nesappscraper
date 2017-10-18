@@ -69,10 +69,12 @@ class NesaPPSpider(scrapy.Spider):
         index = course_names.index(response.meta['course'])
         # append current exam pack item
         exam_pack_items[index].append( exam_pack_item )
+        yield exam_pack_item
 
     def output(self):
         for i in range(len(course_names)):
-            yield course_item(
-                course = course_names[i],
-                packs = exam_pack_items[i]
-            )
+            course_item_output = course_item()
+            course_item_output['course'] = course_names[i]
+            course_item_output['packs'] = exam_pack_items[i]
+
+            yield course_item_output
