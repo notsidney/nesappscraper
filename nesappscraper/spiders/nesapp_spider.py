@@ -8,7 +8,6 @@ from ..items import exam_pack_item, doc_item
 class NesaPPSpider(scrapy.Spider):
     name = "nesapp"
     start_urls = ['http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers']
-    #start_urls = ['file:///C:/Users/Sidney%20Alcantara/Desktop/test.html']
 
     def parse(self, response):
         # create list of course names
@@ -29,7 +28,9 @@ class NesaPPSpider(scrapy.Spider):
             # loops through all years in each course
             for year in course.css('.res-accordion-content span a'):
                 # extracts link & year for each exam pack
-                exam_pack_link = response.urljoin( year.css('::attr(href)').extract_first() )
+                exam_pack_link = response.urljoin(
+                    year.css('::attr(href)').extract_first()
+                )
                 exam_pack_year = year.css('::text').re_first(r'[0-9]{4}')
 
                 # create new exam_pack_item
@@ -39,8 +40,11 @@ class NesaPPSpider(scrapy.Spider):
                     link = exam_pack_link
                 )
 
-                # scraper follows this link
-                exam_pack_request = scrapy.Request(exam_pack_link,callback=self.parse_docs)
+                # scraper follows this link to each exam pack
+                exam_pack_request = scrapy.Request(
+                    exam_pack_link,
+                    callback = self.parse_docs
+                )
                 # add metadata
                 exam_pack_request.meta['course'] = course_name
                 exam_pack_request.meta['year'] = exam_pack_year
@@ -49,17 +53,25 @@ class NesaPPSpider(scrapy.Spider):
                 yield exam_pack_request
 
     def parse_docs(self, response):
+        # Creates a list of all the docs on the page
         doc_items = []
+        # create doc_item for each doc on the page
         for doc in response.css('.right-menu-list a'):
             doc_items.append( doc_item(
-                doc_link = response.urljoin( doc.css('::attr(href)').extract_first() ),
+                doc_link = response.urljoin(
+                    doc.css('::attr(href)').extract_first()
+                ),
                 doc_name = doc.css('::attr(data-file-name)').extract_first()
                     .replace(response.meta['course'],'')
                     .replace(response.meta['year'],'')
                     .strip()
                     .capitalize()
             ) )
+        # get unfinished exam_pack_item from response meta
         exam_pack_item = response.meta['exam_pack_item']
+        # add doc_items array to exam_pack_item
         exam_pack_item['docs'] = doc_items
-
+        # Yields item
+        # Note this does not yield anything if the pipeline is activated in
+        # settings.
         yield exam_pack_item
