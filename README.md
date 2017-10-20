@@ -96,7 +96,7 @@ Note: [`courses_complete.json`](https://raw.githubusercontent.com/notseenee/nesa
    Your command line should read `.../nesappscraper-master`
     * Note: If running Anaconda/Miniconda on Windows, you may have to use
       `Anaconda Prompt` from the Start menu.
-5. Enter `scrapy crawl nesappscraper`
+5. Enter `scrapy crawl nesapp`
     * Note: This will overwrite the `data.json` file originally downloaded.
 
 ### Running on Scrapy Cloud
@@ -121,7 +121,7 @@ In `pipelines.py` inside the `nesappscraper` folder:
 * On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 * Total data usage was **~100 MB**.
 * Total request count should be **3102+** to get all papers.
-* There should be **1550+** items scraped to get all papers.
+* There should be **1567+** items scraped to get all papers.
 * There should be **112** courses.
 
 ## NESA HSC Paper upload schedule
