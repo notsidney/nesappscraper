@@ -1,14 +1,12 @@
 # NESA PP Scraper
-A web scraper for NESA HSC past paper links, built with Scrapy on Python 2.7.14
+A web scraper for [NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers)
+, built with Scrapy on Python 2.7.14
 
 This project is freely available under the [MIT Licence](https://github.com/notseenee/nesappscraper/blob/master/LICENSE).
 Please link back to this repo! :)
 
-HSC past papers:
-http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers
-
 This scraper was built to get links for all past paper documents for 
-https://hscpastpapers.com
+http://hscpastpapers.com
 
 ---
 
@@ -97,7 +95,7 @@ shows when `data.json` was last updated and how many items it scraped.
     * Note: If running Anaconda/Miniconda on Windows, you may have to use
       `Anaconda Prompt` from the Start menu.
 5. Enter `scrapy crawl nesapp`
-    * Note: This will overwrite the `data.json` file originally downloaded.
+    * Note: This will overwrite any `data.json` and `meta.json` files.
 
 ### Running on Scrapy Cloud
 This version of the scraper will not work on Scrapy Cloud without modifications.
@@ -113,11 +111,12 @@ course/subject. See [#description](#description)
 ### Changing output filename
 In `pipelines.py` inside the `nesappscraper` folder:
 
-* On line 18, change `data.json` to the file name you want.
+* On line 16, change `data.json` to the file name you want.
+* On line 18, change `meta.json` to the file name you want.
 * The file extension must remain `.json`
 
 ### Runtime stats
-* On an Intel Core i3-6100U, the crawler ran for **~5 min**.
+* On an Intel Core i3-6100U, the crawler ran for **~6 min**.
 * On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 * Total data usage was **~100 MB**.
 * Total request count should be **3136+** to get all papers.
