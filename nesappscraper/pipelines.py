@@ -18,6 +18,8 @@ class NesappscraperPipeline(object):
         self.meta = open('meta.json', 'w')
         # creates counter
         self.count = 0
+        # gets current time
+        self.start_time = datetime.datetime.today()
 
     # called when each exam_pack_item is yielded in parse_docs
     def process_item(self, item, spider):
@@ -61,10 +63,16 @@ class NesappscraperPipeline(object):
         # Close JSON file
         self.file.close()
 
+        # Get end time
+        self.end_time = datetime.datetime.today()
+        # Get runtime
+        self.runtime = self.end_time - self.start_time
+
         # Writes to meta json file
         self.meta.write(
             '{ ' + 
-            '"timestamp": "' + datetime.datetime.today().isoformat() + '", ' +
+            '"timestamp": "' + str( self.end_time.isoformat() ) + '", ' +
+            '"runtime": "' + str( self.runtime.total_seconds() ) + '", ' +
             '"exam_pack_items": ' + str( self.count ) +
             ' }'
         )

@@ -65,7 +65,7 @@ class NesaPPSpider(scrapy.Spider):
                     .lower()
                     .replace(response.meta['course'].lower(),'')
                     .replace(response.meta['year'],'')
-                    .replace(' - ','')
+                    .lstrip(' - ')
                     .replace('classical','')
                     .replace('modern','')
                     .replace('heritage','')
