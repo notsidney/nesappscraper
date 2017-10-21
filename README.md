@@ -4,10 +4,11 @@ A web scraper for NESA HSC past paper links, built with Scrapy on Python 2.7.14
 This project is freely available under the [MIT Licence](https://github.com/notseenee/nesappscraper/blob/master/LICENSE).
 Please link back to this repo! :)
 
-HSC past papers: http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers
+HSC past papers:
+http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers
 
-This scraper was built to get links for all past paper documents for a web app
-currently under development, available at https://github.com/notseenee/hscpapers
+This scraper was built to get links for all past paper documents for 
+https://hscpastpapers.com
 
 ---
 
@@ -26,10 +27,9 @@ currently under development, available at https://github.com/notseenee/hscpapers
 ---
 ## Get the data
 ### https://raw.githubusercontent.com/notseenee/nesappscraper/master/data.json
-JSON, 1.58 MB, MD5: `397C8C3F8C66DE4253D5024581EA1551`
 
-Note: [`courses_complete.json`](https://raw.githubusercontent.com/notseenee/nesappscraper/master/data.json) contains all exam packs for all courses, but
-**not** individual documents.
+[`meta.json`](https://raw.githubusercontent.com/notseenee/nesappscraper/master/meta.json)
+shows when `data.json` was last updated and how many items it scraped.
 
 ## Data format
 ### JSON Schema
@@ -117,10 +117,10 @@ In `pipelines.py` inside the `nesappscraper` folder:
 * The file extension must remain `.json`
 
 ### Runtime stats
-* On an Intel Core i3-6100U, the crawler ran for **~6 min**.
+* On an Intel Core i3-6100U, the crawler ran for **~5 min**.
 * On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 * Total data usage was **~100 MB**.
-* Total request count should be **3102+** to get all papers.
+* Total request count should be **3136+** to get all papers.
 * There should be **1567+** items scraped to get all papers.
 * There should be **112** courses.
 
