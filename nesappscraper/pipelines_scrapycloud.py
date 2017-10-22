@@ -15,19 +15,21 @@ from scrapinghub.hubstorage.utils import millitime
 class NesappscraperPipelineScrapyCloud(object):
     # from https://github.com/scrapinghub/scrapinghub-entrypoint-scrapy/blob/master/sh_scrapy/writer.py
     def __init__(self):
-        self.path = ''
+        self.path = os.environ['SHUB_FIFO_PATH']
         self._lock = threading.Lock()
         self._pipe = None
+        # create list of exam packs
+        self.exam_pack_list = []
+        # creates counter
+        self.count = 0
+        # initialises time
+        self.start_time = datetime.datetime.today()
 
     # called when the spider opens
     def open_spider(self, spider):
         # open pipe
         with self._lock:
-            self._pipe = open(self.path, 'wb')
-        # create list of exam packs
-        self.exam_pack_list = []
-        # creates counter
-        self.count = 0
+            self._pipe = open(self.path, 'w')
         # gets current time
         self.start_time = datetime.datetime.today()
 
