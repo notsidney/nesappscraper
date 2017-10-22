@@ -18,10 +18,6 @@ class NesappscraperPipelineScrapyCloud(object):
         self.path = ''
         self._lock = threading.Lock()
         self._pipe = None
-        if not self.path:
-            self._write = _not_configured
-            self.open = _not_configured
-            self.close = _not_configured
 
     # called when the spider opens
     def open_spider(self, spider):
