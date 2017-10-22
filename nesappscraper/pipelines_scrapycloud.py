@@ -14,7 +14,7 @@ from scrapinghub.hubstorage.utils import millitime
 
 class NesappscraperPipelineScrapyCloud(object):
     # from https://github.com/scrapinghub/scrapinghub-entrypoint-scrapy/blob/master/sh_scrapy/writer.py
-    def __init__(self, path):
+    def __init__(self):
         self.path = path or ''
         self._lock = threading.Lock()
         self._pipe = None
