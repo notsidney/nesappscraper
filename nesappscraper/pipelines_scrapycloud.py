@@ -56,6 +56,14 @@ class NesappscraperPipelineScrapyCloud(object):
     def write_stats(self, stats):
         self._write('STA', {'time': millitime(), 'stats': stats})
 
+    def write_log(self, level, message):
+        log = {
+            'time': millitime(),
+            'level': level,
+            'message': message
+        }
+        self._write('LOG', log)
+
     # called when each exam_pack_item is yielded in parse_docs
     def process_item(self, item, spider):
         # increment counter
@@ -74,6 +82,8 @@ class NesappscraperPipelineScrapyCloud(object):
         # If this is the first exam pack of the course, append it to the lsit
         if placed == False:
             self.exam_pack_list.append([item])
+        # Add log
+        self._write_log(20, 'test#' + str(self.count))
         # Raises DropItem exception so it doesn't output anything
         raise DropItem('Using custom output for item #' + str(self.count))
 
