@@ -107,11 +107,11 @@ class NesappscraperPipelineScrapyCloud(object):
 
         # Writes to meta json file
         self.write_stats(
-            '{' + 
-            '"timestamp": "' + str( self.end_time.isoformat() ) + '", ' +
-            '"runtime": "' + str( self.runtime.total_seconds() ) + '", ' +
-            '"exam_pack_items": ' + str( self.count ) +
-            '}'
+            {
+            "timestamp": str( self.end_time.isoformat() ),
+            "runtime": str( self.runtime.total_seconds() ), 
+            "exam_pack_items": + str( self.count )
+            }
         )
 
         # finished!
