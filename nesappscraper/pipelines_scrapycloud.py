@@ -15,6 +15,7 @@ from scrapinghub.hubstorage.utils import millitime
 
 class NesappscraperPipelineScrapyCloud(object):
     # from https://github.com/scrapinghub/scrapinghub-entrypoint-scrapy/blob/master/sh_scrapy/writer.py
+    # and https://doc.scrapinghub.com/scrapy-cloud-write-entrypoint.html
     def __init__(self):
         self.path = os.environ['SHUB_FIFO_PATH']
         self._lock = threading.Lock()
@@ -23,16 +24,12 @@ class NesappscraperPipelineScrapyCloud(object):
         self.exam_pack_list = []
         # creates counter
         self.count = 0
-        # initialises time
-        self.start_time = datetime.datetime.today()
 
     # called when the spider opens
     def open_spider(self, spider):
         # open pipe
         with self._lock:
             self._pipe = open(self.path, 'w')
-        # gets current time
-        self.start_time = datetime.datetime.today()
 
     def _write(self, command, payload):
         # binary command
@@ -53,9 +50,6 @@ class NesappscraperPipelineScrapyCloud(object):
 
     def write_item(self, item):
         self._write('ITM', item)
-
-    def write_stats(self, stats):
-        self._write('STA', {'time': millitime(), 'stats': stats})
 
     def write_log(self, level, message):
         log = {
@@ -83,8 +77,6 @@ class NesappscraperPipelineScrapyCloud(object):
         # If this is the first exam pack of the course, append it to the lsit
         if placed == False:
             self.exam_pack_list.append([item])
-        # Add log
-        self.write_log(20, 'test#' + str(self.count))
         # Raises DropItem exception so it doesn't output anything
         raise DropItem('Using custom output for item #' + str(self.count))
 
@@ -97,24 +89,7 @@ class NesappscraperPipelineScrapyCloud(object):
                 course_name = self.exam_pack_list[i][0]['course'],
                 packs = self.exam_pack_list[i]
             ) )
-            # Writes coruse_item to the JSON file
+            # Writes coruse_item 
             self.write_item(line)
 
-        # Get end time
-        self.end_time = datetime.datetime.today()
-        # Get runtime
-        self.runtime = self.end_time - self.start_time
-
-        # Writes to meta json file
-        self.write_stats(
-            {
-            "timestamp": str( self.end_time.isoformat() ),
-            "runtime": str( self.runtime.total_seconds() ), 
-            "exam_pack_items": str( self.count )
-            }
-        )
-
-        # finished!
-        self._write('FIN', {'outcome': 'finished'})
-        self._pipe.flush()
         self._pipe.close()
