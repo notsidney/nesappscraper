@@ -90,23 +90,17 @@ shows when `data.json` was last updated and how many items it scraped.
     * If installing on Windows, Miniconda is recommended.
 3. Clone this repo or download ZIP using the green button above.
     * ![Image of button](https://i.imgur.com/HEa7joN.png)
-4. Open a command line and browse to the downloaded copy of this repo.
+4. In `/nesappscraper/settings.py`, comment out line 68 and uncomment line 69.
+5. Open a command line and browse to the downloaded copy of this repo.
    Your command line should read `.../nesappscraper-master`
     * Note: If running Anaconda/Miniconda on Windows, you may have to use
       `Anaconda Prompt` from the Start menu.
-5. Enter `scrapy crawl nesapp`
+6. Enter `scrapy crawl nesapp`
     * Note: This will overwrite any `data.json` and `meta.json` files.
 
 ### Running on Scrapy Cloud
-This version of the scraper will not work on Scrapy Cloud without modifications.
-You need to disable the item pipeline in `settings.py`
-(in the `nesappscraper` folder):
-
-* Comment out lines 67, 68, and 69 by putting a `#` at the start of the line.
-
-Note that this will not output `course_item` objects in the first-level array.
-It will output `exam_pack_item` objects instead, so they won't be grouped by
-course/subject. See [#description](#description)
+Downloading the repo as-is will give you the version that can run on Scrapy
+Cloud.
 
 ### Changing output filename
 In `pipelines.py` inside the `nesappscraper` folder:
@@ -120,8 +114,8 @@ In `pipelines.py` inside the `nesappscraper` folder:
 * On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 * Total data usage was **~100 MB**.
 * Total request count should be **3136+** to get all papers.
-* There should be **1567+** items scraped to get all papers.
-* There should be **112** courses.
+* There should be **1584+** items scraped to get all papers.
+* There should be **113** courses.
 
 ## NESA HSC Paper upload schedule
 This crawler should be loaded frequently during the HSC exam block to get the

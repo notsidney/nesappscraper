@@ -5,6 +5,7 @@
 from items import course_item
 from scrapy.exceptions import DropItem
 import datetime
+import logging
 import json
 
 class NesappscraperPipeline(object):
@@ -56,8 +57,9 @@ class NesappscraperPipeline(object):
             ))
             # Writes coruse_item to the JSON file
             self.file.write(json.dumps(line))
-        # Deletes , for last course_item for valid JSON
-        self.file.seek(-1,2)
+            # If not the last line, add a comma
+            if i != len(self.exam_pack_list) - 1:
+                self.file.write(',\n')
         # Add close bracket
         self.file.write(']')
         # Close JSON file
