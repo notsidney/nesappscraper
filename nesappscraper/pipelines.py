@@ -3,6 +3,7 @@
 # You must disable this pipeline in settings.py to run on Scrapy Cloud
 
 from items import course_item
+from scrapy.exceptions import DropItem
 import datetime
 import json
 
@@ -39,9 +40,8 @@ class NesappscraperPipeline(object):
         # If this is the first exam pack of the course, append it to the lsit
         if placed == False:
             self.exam_pack_list.append([item])
-        # Returns nothing - usually this would return an item
-        # This prevents it from working on scrapy cloud
-        return None
+        # Raises DropItem exception so it doesn't output anything
+        raise DropItem('Using custom output for item #' + str(self.count))
 
     # called when the spider closes
     def close_spider(self, spider):
