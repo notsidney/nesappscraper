@@ -1,5 +1,6 @@
 import scrapy
 import logging
+import json
 
 from scrapy import signals
 from scrapy.xlib.pydispatch import dispatcher
@@ -57,7 +58,7 @@ class NesaPPSpider(scrapy.Spider):
         doc_items = []
         # create doc_item for each doc on the page
         for doc in response.css('.right-menu-list a'):
-            doc_items.append( doc_item(
+            doc_items.append( dict( doc_item(
                 doc_link = response.urljoin(
                     doc.css('::attr(href)').extract_first()
                 ),
@@ -94,7 +95,7 @@ class NesaPPSpider(scrapy.Spider):
                     .replace('Hsc','HSC')
                     .replace('I ','SOR I ')
                     .replace('Ii','SOR II ')
-            ) )
+            ) ) )
         # get unfinished exam_pack_item from response meta
         exam_pack_item = response.meta['exam_pack_item']
         # add doc_items array to exam_pack_item
@@ -102,4 +103,4 @@ class NesaPPSpider(scrapy.Spider):
         # Yields item
         # Note this does not yield anything if the pipeline is activated in
         # settings.
-        yield exam_pack_item
+        yield dict(exam_pack_item)

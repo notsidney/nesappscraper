@@ -50,12 +50,12 @@ class NesappscraperPipeline(object):
         # Loops through each course in exam_pack_list
         for i in range(len(self.exam_pack_list)):
             # Makes a course_item for each course and formats properly
-            line = str(course_item(
+            line = dict(course_item(
                 course_name = self.exam_pack_list[i][0]['course'],
                 packs = self.exam_pack_list[i]
-            )).replace('u\'', '\'').replace('\'','"') + '\n,'
+            ))
             # Writes coruse_item to the JSON file
-            self.file.write(line)
+            self.file.write(json.dumps(line))
         # Deletes , for last course_item for valid JSON
         self.file.seek(-1,2)
         # Add close bracket

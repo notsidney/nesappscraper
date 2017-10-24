@@ -93,10 +93,10 @@ class NesappscraperPipelineScrapyCloud(object):
         # Loops through each course in exam_pack_list
         for i in range(len(self.exam_pack_list)):
             # Makes a course_item for each course and formats properly
-            line = course_item(
+            line = dict( course_item(
                 course_name = self.exam_pack_list[i][0]['course'],
                 packs = self.exam_pack_list[i]
-            )
+            ) )
             # Writes coruse_item to the JSON file
             self.write_item(line)
 
@@ -110,7 +110,7 @@ class NesappscraperPipelineScrapyCloud(object):
             {
             "timestamp": str( self.end_time.isoformat() ),
             "runtime": str( self.runtime.total_seconds() ), 
-            "exam_pack_items": + str( self.count )
+            "exam_pack_items": str( self.count )
             }
         )
 
