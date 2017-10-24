@@ -83,7 +83,7 @@ class NesappscraperPipelineScrapyCloud(object):
         if placed == False:
             self.exam_pack_list.append([item])
         # Add log
-        self._write_log(20, 'test#' + str(self.count))
+        self.write_log(20, 'test#' + str(self.count))
         # Raises DropItem exception so it doesn't output anything
         raise DropItem('Using custom output for item #' + str(self.count))
 
@@ -106,11 +106,11 @@ class NesappscraperPipelineScrapyCloud(object):
 
         # Writes to meta json file
         self.write_stats(
-            'STA { "stats: {' + 
+            '{' + 
             '"timestamp": "' + str( self.end_time.isoformat() ) + '", ' +
             '"runtime": "' + str( self.runtime.total_seconds() ) + '", ' +
             '"exam_pack_items": ' + str( self.count ) +
-            ' }}'
+            '}'
         )
 
         # finished!
