@@ -26,8 +26,8 @@ http://hscpastpapers.com
 ## Get the data
 ### https://raw.githubusercontent.com/notseenee/nesappscraper/master/data.json
 
-[`meta.json`](https://raw.githubusercontent.com/notseenee/nesappscraper/master/meta.json)
-shows when `data.json` was last updated and how many items it scraped.
+Check [`meta.json`](https://raw.githubusercontent.com/notseenee/nesappscraper/master/meta.json)
+to see when `data.json` was last updated and how many items it scraped.
 
 ## Data format
 ### JSON Schema
@@ -113,13 +113,14 @@ In `pipelines.py` inside the `nesappscraper` folder:
 * On an Intel Core i3-6100U, the crawler ran for **~6 min**.
 * On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 * Total data usage was **~100 MB**.
-* Total request count should be **3136+** to get all papers.
-* There should be **1584+** items scraped to get all papers.
+* Total request count should be **3176+** to get all papers.
+* There should be **1589+** items scraped to get all papers.
 * There should be **113** courses.
 
 ## NESA HSC Paper upload schedule
 This crawler should be loaded frequently during the HSC exam block to get the
-latest papers. In 2017, papers are usually uploaded **two days** after the exam.
+latest papers. In 2017, papers are usually uploaded **two days** after the exam
+before noon.
 
 ## Acknowledgements
 * Scrapy: https://scrapy.org/

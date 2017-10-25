@@ -48,8 +48,12 @@ class NesappscraperPipeline(object):
     def close_spider(self, spider):
         # Add open bracket for JSON file
         self.file.write('[')
+        # Sorts courses by course
+        self.exam_pack_list.sort(key=lambda k: k[0]['course'])
         # Loops through each course in exam_pack_list
         for i in range(len(self.exam_pack_list)):
+            # Sorts exam_packs by year
+            self.exam_pack_list[i].sort(key=lambda k: k['year'], reverse=True)
             # Makes a course_item for each course and formats properly
             line = dict(course_item(
                 course_name = self.exam_pack_list[i][0]['course'],
