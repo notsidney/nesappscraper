@@ -38,7 +38,7 @@ class NesappscraperPipeline(object):
                 # already in the list
                 self.exam_pack_list[i].append(item)
                 placed = True
-        # If this is the first exam pack of the course, append it to the lsit
+        # If this is the first exam pack of the course, append it to the list
         if placed == False:
             self.exam_pack_list.append([item])
         # Raises DropItem exception so it doesn't output anything
@@ -59,7 +59,7 @@ class NesappscraperPipeline(object):
                 course_name = self.exam_pack_list[i][0]['course'],
                 packs = self.exam_pack_list[i]
             ))
-            # Writes coruse_item to the JSON file
+            # Writes course_item to the JSON file
             self.file.write(json.dumps(line))
             # If not the last line, add a comma
             if i != len(self.exam_pack_list) - 1:
@@ -74,9 +74,9 @@ class NesappscraperPipeline(object):
         # Get runtime
         self.runtime = self.end_time - self.start_time
 
-        # Writes to meta json file
+        # Writes to meta JSON file
         self.meta.write(
-            '{ ' + 
+            '{ ' +
             '"timestamp": "' + str( self.end_time.isoformat() ) + '", ' +
             '"runtime": "' + str( self.runtime.total_seconds() ) + '", ' +
             '"exam_pack_items": ' + str( self.count ) +
