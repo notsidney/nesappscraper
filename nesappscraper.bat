@@ -1,6 +1,6 @@
 @echo off
 title nesappscraper
-echo time /T
+echo %date% %time%
 git add nesappscraper.bat
 git commit -m "Update data"
 git push
