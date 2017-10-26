@@ -1,7 +1,7 @@
 @echo off
-title Scraping NESA past papers...
-echo Starting Scrapy...
+title nesappscraper
+echo time /T
 git add nesappscraper.bat
-git commit -m "test bat 2"
+git commit -m "Update data"
 git push
 pause
