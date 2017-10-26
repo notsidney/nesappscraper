@@ -1,6 +1,7 @@
 # NESA PP Scraper
-A web scraper for [NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers)
-, built with Scrapy on Python 2.7.14
+A web scraper for
+[NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers),
+built with Scrapy on Python 2.7.14
 
 This project is freely available under the [MIT Licence](https://github.com/notseenee/nesappscraper/blob/master/LICENSE).
 Please link back to this repo! :)
@@ -90,17 +91,20 @@ to see when `data.json` was last updated and how many items it scraped.
     * If installing on Windows, Miniconda is recommended.
 3. Clone this repo or download ZIP using the green button above.
     * ![Image of button](https://i.imgur.com/HEa7joN.png)
-4. In `/nesappscraper/settings.py`, comment out line 68 and uncomment line 69.
-5. Open a command line and browse to the downloaded copy of this repo.
+4. Open a command line and browse to the downloaded copy of this repo.
    Your command line should read `.../nesappscraper-master`
     * Note: If running Anaconda/Miniconda on Windows, you may have to use
       `Anaconda Prompt` from the Start menu.
-6. Enter `scrapy crawl nesapp`
+5. Enter `scrapy crawl nesapp`
     * Note: This will overwrite any `data.json` and `meta.json` files.
 
 ### Running on Scrapy Cloud
-Downloading the repo as-is will give you the version that can run on Scrapy
-Cloud.
+This version of the scraper will not work on Scrapy Cloud without modifications.
+You need to switch the item pipeline in `settings.py`
+(in the `nesappscraper` folder):
+
+* Comment out lines 69 by putting a `#` at the start of the line.
+* Uncomment line 68 by removing the `#` at the start of the line.
 
 ### Changing output filename
 In `pipelines.py` inside the `nesappscraper` folder:

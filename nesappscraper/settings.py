@@ -65,8 +65,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-		'nesappscraper.pipelines_scrapycloud.NesappscraperPipelineScrapyCloud': 300,
-		# 'nesappscraper.pipelines.NesappscraperPipeline': 300,
+		# 'nesappscraper.pipelines_scrapycloud.NesappscraperPipelineScrapyCloud': 300,
+		'nesappscraper.pipelines.NesappscraperPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
