@@ -2,7 +2,7 @@
 
 # You must disable this pipeline in settings.py to run on Scrapy Cloud
 
-from items import course_item
+from .items import course_item
 from scrapy.exceptions import DropItem
 import datetime
 import logging
