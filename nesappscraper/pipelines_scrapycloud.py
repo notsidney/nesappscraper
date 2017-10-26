@@ -2,7 +2,7 @@
 
 # You must disable this pipeline in settings.py to run on Scrapy Cloud
 
-from items import course_item
+from .items import course_item
 from scrapy.exceptions import DropItem
 import datetime
 import json
@@ -74,7 +74,7 @@ class NesappscraperPipelineScrapyCloud(object):
                 # already in the list
                 self.exam_pack_list[i].append(item)
                 placed = True
-        # If this is the first exam pack of the course, append it to the lsit
+        # If this is the first exam pack of the course, append it to the list
         if placed == False:
             self.exam_pack_list.append([item])
         # Raises DropItem exception so it doesn't output anything
@@ -93,7 +93,7 @@ class NesappscraperPipelineScrapyCloud(object):
                 course_name = self.exam_pack_list[i][0]['course'],
                 packs = self.exam_pack_list[i]
             ) )
-            # Writes coruse_item 
+            # Writes course_item
             self.write_item(line)
 
         self._pipe.close()
