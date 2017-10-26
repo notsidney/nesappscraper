@@ -93,8 +93,7 @@ class NesaPPSpider(scrapy.Spider):
                     .strip()
                     .title()
                     .replace('Hsc','HSC')
-                    .replace('I ','SOR I ')
-                    .replace('Ii','SOR II ')
+                    .replace('Ii','II')
             ) ) )
         # get unfinished exam_pack_item from response meta
         exam_pack_item = response.meta['exam_pack_item']
