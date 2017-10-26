@@ -1,6 +1,8 @@
 @echo off
 title nesappscraper
-git add nesappscraper.bat
+scrapy crawl nesapp
+git add data.json
+git add meta.json
 git commit -m "Update data: %date% %time%"
 git push
 pause
