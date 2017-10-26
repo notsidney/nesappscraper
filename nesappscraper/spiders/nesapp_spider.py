@@ -46,6 +46,7 @@ class NesaPPSpider(scrapy.Spider):
                     exam_pack_link,
                     callback = self.parse_docs
                 )
+
                 # add metadata
                 exam_pack_request.meta['course'] = course_name
                 exam_pack_request.meta['year'] = exam_pack_year
@@ -59,9 +60,9 @@ class NesaPPSpider(scrapy.Spider):
         # create doc_item for each doc on the page
         for doc in response.css('.right-menu-list a'):
             doc_items.append( dict( doc_item(
-                doc_link = response.urljoin(
+                doc_link = strip_document_url(response.urljoin(
                     doc.css('::attr(href)').extract_first()
-                ),
+                )),
                 doc_name = doc.css('::attr(data-file-name)').extract_first()
                     .lower()
                     .replace(response.meta['course'].lower(),'')
@@ -97,9 +98,24 @@ class NesaPPSpider(scrapy.Spider):
             ) ) )
         # get unfinished exam_pack_item from response meta
         exam_pack_item = response.meta['exam_pack_item']
+
+        # use true redirected url for exam pack
+        exam_pack_item['link'] = strip_exam_pack_url(response.url)
+
         # add doc_items array to exam_pack_item
         exam_pack_item['docs'] = doc_items
         # Yields item
         # Note this does not yield anything if the pipeline is activated in
         # settings.
         yield dict(exam_pack_item)
+
+
+# Strips unnecessary data from an exam pack url
+def strip_exam_pack_url(url):
+    # nothing after '/!ut/' is needed
+    return url.split('/!ut/')[0]
+
+# Strips unnecessary data from a document url
+def strip_document_url(url):
+    # CACHEID isn't needed
+    return url.split('&CACHEID=')[0]
