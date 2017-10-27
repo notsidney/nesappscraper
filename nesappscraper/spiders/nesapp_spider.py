@@ -60,17 +60,11 @@ class NesaPPSpider(scrapy.Spider):
         doc_items = []
         # create doc_item for each doc on the page
         for doc in response.css('.right-menu-list a'):
-            # get formatted doc link
-            doc_link_formatted = strip_document_url(response.urljoin(
-                doc.css('::attr(href)').extract_first()
-            ))
-            # add .pdf extension if missing
-            missing_ext = re.search('[0-9]\?MOD', doc_link_formatted)
-            if missing_ext:
-                doc_link_formatted.replace('?MOD','.pdf?MOD')
             # append do doc_items list
             doc_items.append( dict( doc_item(
-                doc_link = doc_link_formatted,
+                doc_link = strip_document_url(response.urljoin(
+                    doc.css('::attr(href)').extract_first()
+                )),
                 doc_name = doc.css('::attr(data-file-name)').extract_first()
                     .lower()
                     .replace(response.meta['course'].lower(),'')
@@ -126,4 +120,10 @@ def strip_exam_pack_url(url):
 # Strips unnecessary data from a document url
 def strip_document_url(url):
     # CACHEID isn't needed
-    return url.split('&CACHEID=')[0]
+    formatted = url.split('&CACHEID=')[0]
+    # check if missing .pdf extension
+    missing_ext = re.search('[0-9]\?MOD', formatted)
+    if missing_ext:
+        formatted = formatted.replace('?MOD', '.pdf?MOD')
+
+    return formatted
