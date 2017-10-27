@@ -58,16 +58,17 @@ class NesaPPSpider(scrapy.Spider):
     def parse_docs(self, response):
         # Creates a list of all the docs on the page
         doc_items = []
-        # get formatted doc link
-        doc_link_formatted = strip_document_url(response.urljoin(
-            doc.css('::attr(href)').extract_first()
-        ))
-        # add .pdf extension if missing
-        missng_ext = re.search('[0-9]\?MOD',text)
-        if missing_ext:
-            doc_link_formatted.replace('?MOD','.pdf?MOD')
         # create doc_item for each doc on the page
         for doc in response.css('.right-menu-list a'):
+            # get formatted doc link
+            doc_link_formatted = strip_document_url(response.urljoin(
+                doc.css('::attr(href)').extract_first()
+            ))
+            # add .pdf extension if missing
+            missng_ext = re.search('[0-9]\?MOD',text)
+            if missing_ext:
+                doc_link_formatted.replace('?MOD','.pdf?MOD')
+            # append do doc_items list
             doc_items.append( dict( doc_item(
                 doc_link = doc_link_formatted,
                 doc_name = doc.css('::attr(data-file-name)').extract_first()
