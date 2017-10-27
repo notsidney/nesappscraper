@@ -65,7 +65,7 @@ class NesaPPSpider(scrapy.Spider):
                 doc.css('::attr(href)').extract_first()
             ))
             # add .pdf extension if missing
-            missng_ext = re.search('[0-9]\?MOD',text)
+            missing_ext = re.search('[0-9]\?MOD', doc_link_formatted)
             if missing_ext:
                 doc_link_formatted.replace('?MOD','.pdf?MOD')
             # append do doc_items list
