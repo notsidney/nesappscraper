@@ -123,8 +123,9 @@ In `pipelines.py` inside the `nesappscraper` folder:
 
 ## NESA HSC Paper upload schedule
 This crawler should be loaded frequently during the HSC exam block to get the
-latest papers. In 2017, papers are usually uploaded **two days** after the exam
-before noon.
+latest papers. In 2017, papers are usually uploaded **two business days** after
+the exam, around noon.
+
 
 ## Acknowledgements
 * Scrapy: https://scrapy.org/
