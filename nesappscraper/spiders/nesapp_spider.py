@@ -65,38 +65,10 @@ class NesaPPSpider(scrapy.Spider):
                 doc_link = strip_document_url(response.urljoin(
                     doc.css('::attr(href)').extract_first()
                 )),
-                doc_name = doc.css('::attr(data-file-name)').extract_first()
-                    .lower()
-                    .replace(response.meta['course'].lower(),'')
-                    .replace(response.meta['year'],'')
-                    .lstrip(' - ')
-                    .replace('classical','')
-                    .replace('modern','')
-                    .replace('heritage','')
-                    .replace('hebrew','')
-                    .replace('continuers','')
-                    .replace('chinese','')
-                    .replace('(mandarin)','')
-                    .replace('mandarin','')
-                    .replace('background speakers','')
-                    .replace('indonesian','')
-                    .replace('and literature','')
-                    .replace('japanese','')
-                    .replace('korean','')
-                    .replace('greek','')
-                    .replace('extension','')
-                    .replace('beginners','')
-                    .replace('ancient history','')
-                    .replace('english standard & advanced','')
-                    .replace('comparative literature','')
-                    .replace('information technology','')
-                    .replace('pdhpe','')
-                    .replace('physical development, health and physical education','')
-                    .replace('aboriginal studies','')
-                    .strip()
-                    .title()
-                    .replace('Hsc','HSC')
-                    .replace('Ii','II')
+                doc_name = format_doc_name(
+                    doc.css('::attr(data-file-name)').extract_first(),
+                    response.meta['course'],
+                    response.meta['year'] )
             ) ) )
         # get unfinished exam_pack_item from response meta
         exam_pack_item = response.meta['exam_pack_item']
@@ -125,5 +97,47 @@ def strip_document_url(url):
     missing_ext = re.search('[0-9]\?MOD', formatted)
     if missing_ext:
         formatted = formatted.replace('?MOD', '.pdf?MOD')
+    # Output
+    return formatted
 
+# Formats doc_name
+def format_doc_name(name, course, year):
+    formatted = name.lower()
+    formatted = formatted.replace(course.lower(),'')
+    formatted = formatted.replace(year,'')
+    formatted = formatted.lstrip(' - ')
+    formatted = formatted.replace('classical','')
+    formatted = formatted.replace('modern','')
+    formatted = formatted.replace('heritage','')
+    formatted = formatted.replace('hebrew','')
+    formatted = formatted.replace('continuers','')
+    formatted = formatted.replace('chinese','')
+    formatted = formatted.replace('(mandarin)','')
+    formatted = formatted.replace('mandarin','')
+    formatted = formatted.replace('background speakers','')
+    formatted = formatted.replace('indonesian','')
+    formatted = formatted.replace('and literature','')
+    formatted = formatted.replace('japanese','')
+    formatted = formatted.replace('korean','')
+    formatted = formatted.replace('greek','')
+    formatted = formatted.replace('extension','')
+    formatted = formatted.replace('beginners','')
+    formatted = formatted.replace('ancient history','')
+    formatted = formatted.replace('english standard & advanced','')
+    formatted = formatted.replace('comparative literature','')
+    formatted = formatted.replace('information technology','')
+    formatted = formatted.replace('pdhpe','')
+    formatted = formatted.replace('physical development, health and physical education','')
+    formatted = formatted.replace('aboriginal studies','')
+    formatted = formatted.strip()
+    formatted = formatted.title()
+    formatted = formatted.replace('Hsc','HSC')
+    formatted = formatted.replace('Ii','II')
+    formatted = formatted.replace('Iii','III')
+    # Fix for SOR I & II papers
+    if course == 'Studies of Religion':
+        if ( formatted.startswith("I") or formatted.startswith("1") or
+            formatted.startswith("2") ):
+            formatted = 'SOR ' + formatted
+    # Output
     return formatted
