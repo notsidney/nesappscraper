@@ -12,8 +12,8 @@ git add meta.json
 git commit -S -m "Update data: $timestamp"
 git push
 # Copy to hscpapers git
-Copy-Item -Path data.json -Destination ..\hscpapers\data\data.json
-Copy-Item -Path meta.json -Destination ..\hscpapers\data\meta.json
+Copy-Item -Path data.json -Destination ..\hscpastpapers\data\data.json
+Copy-Item -Path meta.json -Destination ..\hscpastpapers\data\meta.json
 # Push to hscpapers git
 cd ..\hscpapers
 git add data/data.json
