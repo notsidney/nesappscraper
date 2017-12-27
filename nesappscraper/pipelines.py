@@ -54,9 +54,14 @@ class NesappscraperPipeline(object):
         for i in range(len(self.exam_pack_list)):
             # Sorts exam_packs by year
             self.exam_pack_list[i].sort(key=lambda k: k['year'], reverse=True)
+            # Gets exam pack course
+            exam_pack_course = self.exam_pack_list[i][0]['course']
+            # Loops through each exam_pack and removes `course` field
+            for j in range(len(self.exam_pack_list[i])):
+                del self.exam_pack_list[i][j]['course']
             # Makes a course_item for each course and formats properly
             line = dict(course_item(
-                course_name = self.exam_pack_list[i][0]['course'],
+                course_name = exam_pack_course,
                 packs = self.exam_pack_list[i]
             ))
             # Writes course_item to the JSON file

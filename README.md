@@ -46,7 +46,6 @@ to see when `data.json` was last updated and how many items it scraped.
                     "object": "exam_pack_item"
                     "type": "object",
                     "properties": {
-                        "course": { "type": "string" },
                         "docs": {
                             "type": "array",
                             "items": {
