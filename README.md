@@ -73,8 +73,6 @@ to see when `data.json` was last updated and how many items it scraped.
     * `packs`, an array of `exam_pack_item` objects.
 * `exam_pack_item` is an object for each year there are documents available for
   each course. Each object contains:
-    * `course`, a string containing the course name (same as `course_name` in
-      `course_item`),
     * `docs`, an array of `doc_item` objects,
     * `link`, a string containing the link to the exam pack, and
     * `year`, a number storing the year of the exam pack.
