@@ -1,4 +1,4 @@
-# NESA PP Scraper
+# NESA Past Papers Scraper
 A web scraper for
 [NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers),
 built with Scrapy on Python 2.7.14
