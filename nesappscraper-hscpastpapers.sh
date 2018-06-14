@@ -23,8 +23,8 @@ cp data.json ../hscpastpapers/data/data.json
 cp meta.json ../hscpastpapers/data/meta.json
 # Push to hscpastpapers git
 cd ../hscpastpapers
-git add data.json
-git add meta.json
+git add data/data.json
+git add data/meta.json
 git commit -S -m "Update data: ${TIMESTAMP}"
 git push
 echo "\n${GREEN}Data updated: ${TIMESTAMP}${NC}"
