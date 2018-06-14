@@ -19,8 +19,8 @@ git commit -S -m "Update data: ${TIMESTAMP}"
 git push
 # Copy to hscpastpapers git
 echo "\n${YELLOW}Push to hscpastpapers:${NC}"
-cp data.json ../hscpastpapers/data.json
-cp meta.json ../hscpastpapers/meta.json
+cp data.json ../hscpastpapers/data/data.json
+cp meta.json ../hscpastpapers/data/meta.json
 # Push to hscpastpapers git
 cd ../hscpastpapers
 git add data.json
