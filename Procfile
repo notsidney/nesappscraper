@@ -1,1 +1,0 @@
-scraper: scrapy crawl nesapp
