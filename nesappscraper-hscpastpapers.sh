@@ -6,7 +6,7 @@ YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
 NC='\033[0m'
 # Run crawler
-scrapy crawl nesapp
+pipenv run scrapy crawl nesapp
 # Print meta.json
 echo "${YELLOW}$(cat meta.json)${NC}"
 # Get timestamp at end of scraping
