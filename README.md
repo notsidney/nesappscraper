@@ -24,6 +24,7 @@ http://hscpastpapers.com
 * [Acknowledgements](#acknowledgements)
 
 ---
+
 ## Get the data
 ### https://raw.githubusercontent.com/notseenee/nesappscraper/master/data.json
 
@@ -32,6 +33,7 @@ to see when `data.json` was last updated and how many items it scraped.
 
 ## Data format
 ### JSON Schema
+Note: Each course_item is collapsed into one line.
 ```javascript
 {
     "type": "array",
@@ -82,17 +84,17 @@ to see when `data.json` was last updated and how many items it scraped.
     * `doc_link`, a string containing the link to the PDF document.
 
 ## Running the scraper yourself
-1. Download and install Python 2.7 from https://www.python.org/downloads/
-2. Download and install Scrapy. Install instructions:
-   https://doc.scrapy.org/en/latest/intro/install.html
-    * If installing on Windows, Miniconda is recommended.
+1. Download and install Python 3.7 (which should include pip)
+    * macOS, using Homebrew: `brew install python`
+    * Windows: https://www.python.org/downloads/
+2. Download and install pipenv. Instructions:
+   https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv
 3. Clone this repo or download ZIP using the green button above.
     * ![Image of button](https://i.imgur.com/HEa7joN.png)
-4. Open a command line and browse to the downloaded copy of this repo.
-   Your command line should read `.../nesappscraper-master`
-    * Note: If running Anaconda/Miniconda on Windows, you may have to use
-      `Anaconda Prompt` from the Start menu.
-5. Enter `scrapy crawl nesapp`
+4. Open the directory of the cloned or downloaded repo.
+5. Install Scrapy and other dependencies using pipenv, making sure it’s using
+   Python 3.7: `pipenv install`
+6. Run `pipenv run scrapy crawl nesapp`
     * Note: This will overwrite any `data.json` and `meta.json` files.
 
 ### Running on Scrapy Cloud
@@ -111,12 +113,20 @@ In `pipelines.py` inside the `nesappscraper` folder:
 * The file extension must remain `.json`
 
 ### Runtime stats
-* On an Intel Core i3-6100U, the crawler ran for **~6 min**.
-* On Scrapy Cloud with 1 unit, it ran for **~55 min**.
-* Total data usage was **~100 MB**.
-* Total request count should be **3176+** to get all papers.
-* There should be **1589+** items scraped to get all papers.
-* There should be **113** courses.
+On a 2018 13″ MacBook Pro (i5-8259U) with ~45 Mbps download connection:
+* Runtime: ~7 min
+* CPU usage: typically 70–80%, spiked at 90%
+* RAM usage: typically 150 MB, spiked at 350 MB
+* Total bytes sent: ~700 KB
+* Total bytes received: ~140 MB
+* Scrapy stats: ![Screenshot of Scrapy stats from Terminal](https://imgur.com/QqIoCXe.png)
+
+On Scrapy Cloud with 1 unit, it ran for **~55 min**.
+
+To check if your data is valid:
+* Total request count should be **1661+** to get all papers.
+* There should be **1654+** items scraped to get all papers.
+* There should be **114** courses.
 
 ## NESA HSC Paper upload schedule
 This crawler should be loaded frequently during the HSC exam block to get the
@@ -129,6 +139,6 @@ the exam, around noon.
 * All HSC papers are provided by NESA and owned by the State of New South Wales.
   They are protected by Crown copyright:
   http://educationstandards.nsw.edu.au/wps/portal/nesa/mini-footer/copyright
-* This scraper does **not** store or make copies fo the documents themselves.
+* This scraper does **not** store or make copies of the documents themselves.
   It only obtains the links to the official copies on the NESA website.
   It is intended for information purposes only.
