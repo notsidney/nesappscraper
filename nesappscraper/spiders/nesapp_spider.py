@@ -4,7 +4,7 @@ import json
 import re
 
 from scrapy import signals
-from scrapy.xlib.pydispatch import dispatcher
+from pydispatch import dispatcher
 from ..items import exam_pack_item, doc_item
 
 class NesaPPSpider(scrapy.Spider):
