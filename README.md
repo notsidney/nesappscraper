@@ -3,7 +3,7 @@ A web scraper for
 [NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers),
 built with Scrapy on Python 2.7.14
 
-This project is freely available under the [MIT Licence](https://github.com/notseenee/nesappscraper/blob/master/LICENSE).
+This project is freely available under the [MIT Licence](https://github.com/notsidney/nesappscraper/blob/master/LICENSE).
 Please link back to this repo! :)
 
 This scraper was built to get links for all past paper documents for 
@@ -26,9 +26,9 @@ http://hscpastpapers.com
 ---
 
 ## Get the data
-### https://raw.githubusercontent.com/notseenee/nesappscraper/master/data.json
+### https://raw.githubusercontent.com/notsidney/nesappscraper/master/data.json
 
-Check [`meta.json`](https://raw.githubusercontent.com/notseenee/nesappscraper/master/meta.json)
+Check [`meta.json`](https://raw.githubusercontent.com/notsidney/nesappscraper/master/meta.json)
 to see when `data.json` was last updated and how many items it scraped.
 
 ## Data format
