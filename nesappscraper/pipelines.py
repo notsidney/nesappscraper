@@ -15,7 +15,7 @@ class NesappscraperPipeline(object):
         # create list of exam packs
         self.exam_pack_list = []
         # create json file
-        self.file = open('data.json', 'w')
+        self.file = open('data_new.json', 'w')
         # creates meta json file
         self.meta = open('meta.json', 'w')
         # creates counter
