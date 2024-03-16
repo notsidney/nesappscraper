@@ -171,14 +171,13 @@ In `pipelines.py` inside the `nesappscraper` folder:
 
 ### Runtime stats
 
-On a 2018 13″ MacBook Pro (i5-8259U) with ~45 Mbps download connection:
+On an M1 Max 16″ MacBook Pro with ~50 Mbps download connection:
 
-- Runtime: ~7 min
-- CPU usage: typically 70–80%, spiked at 90%
-- RAM usage: typically 150 MB, spiked at 350 MB
-- Total bytes sent: ~700 KB
-- Total bytes received: ~140 MB
-- Scrapy stats: ![Screenshot of Scrapy stats from Terminal](https://imgur.com/QqIoCXe.png)
+- Runtime: ~1 min
+- RAM usage: ~75 MB
+- Total bytes sent: ~440 KB
+- Total bytes received: ~100 MB
+- Scrapy stats: ![Screenshot of Scrapy stats from Terminal](./scrapy_stats.png)
 
 On Scrapy Cloud with 1 unit, it ran for **~55 min**.
 
