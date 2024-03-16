@@ -10,22 +10,19 @@ Please link back to this repo! :)
 This scraper was built to get links for all past paper documents for
 http://hscpastpapers.com
 
----
+<table>
+<td>
 
-## Table of contents
+**Contents**
 
 - [Get the data](#get-the-data)
 - [Data format](#data-format)
-  - [JSON Schema](#json-schema)
-  - [Description](#description)
 - [Running the scraper yourself](#running-the-scraper-yourself)
-  - [Running on Scrapy Cloud](#running-on-scrapy-cloud)
-  - [Changing output filename](#changing-output-filename)
-  - [Runtime stats](#runtime-stats)
-- [NESA HSC Paper upload schedule](#nesa-hsc-paper-upload-schedule)
+- [NESA HSC paper upload schedule](#nesa-hsc-paper-upload-schedule)
 - [Acknowledgements](#acknowledgements)
 
----
+</td>
+</table>
 
 ## Get the data
 
@@ -36,7 +33,28 @@ to see when `data.json` was last updated and how many items it scraped.
 
 ## Data format
 
-### JSON Schema
+Source of truth: [scripts/types.d.ts](./scripts/types.d.ts)
+
+```ts
+export type CourseItem = {
+  course_name: string;
+  packs: CoursePack[];
+};
+
+export type CoursePack = {
+  year: string;
+  link: string;
+  docs: CourseDoc[];
+};
+
+export type CourseDoc = {
+  doc_name: string;
+  doc_link: string;
+};
+```
+
+<details>
+<summary><b>JSON Schema</b></summary>
 
 Note: Each course_item is collapsed into one line.
 
@@ -91,20 +109,63 @@ Note: Each course_item is collapsed into one line.
   - `doc_name`, a string containing the name of the document and
   - `doc_link`, a string containing the link to the PDF document.
 
+</details>
+
 ## Running the scraper yourself
 
-1. Download and install Python 3.11 (which should include pip)
+```sh
+pipenv run scrapy crawl nesapp
+deno run --allow-read --allow-write scripts/merge.ts
+```
+
+This will overwrite:
+
+- `data_new.json`, the data you just scraped;
+- `data.json`, the data you just scraped merged with old data;
+- `meta.json`, metadata including the scrape time; and
+- `data_list.json`, the list of course items for improved Git diffs.
+
+### Dependencies
+
+- Python v3.11
+- Pipenv v2023.10.24+
+- Deno v1.37.2+
+
+<details>
+<summary>Install instructions</summary>
+
+1. Download and install Python 3.11
    - macOS, using Homebrew: `brew install python`
    - Windows: https://www.python.org/downloads/
 2. Download and install pipenv. Instructions:
    https://pipenv.pypa.io/en/latest/
-3. Clone this repo or download ZIP using the green button above.
+3. Download and install Deno. Instructions:
+   https://docs.deno.com/runtime/manual
+4. Clone this repo or download ZIP using the green button above.
    - ![Image of button](https://i.imgur.com/HEa7joN.png)
-4. Open the directory of the cloned or downloaded repo.
-5. Install Scrapy and other dependencies using pipenv, making sure it’s using
+5. Open the directory of the cloned or downloaded repo.
+6. Install Scrapy and other dependencies using pipenv, making sure it’s using
    Python 3.11: `pipenv install`
-6. Run `pipenv run scrapy crawl nesapp`
-   - Note: This will overwrite any `data.json` and `meta.json` files.
+
+</details>
+
+### Sanitising data
+
+The NESA website no longer contains the complete list of documents. An old
+version of data is kept in [data_old.json](./data_old.json) and should not be
+updated. Running the scraper will write to [data_new.json](./data_new.json).
+
+👉 After running the scraper, run the Deno script
+[scripts/merge.ts](./scripts/merge.ts) to create a merged
+[data.json](./data.json) file:
+
+```sh
+deno run --allow-read --allow-write scripts/merge.ts
+```
+
+This will also update [data_list.json](./data_list.json), which makes it easier
+to use Git diff to see which course items were added, and check that none were
+removed.
 
 ### Running on Scrapy Cloud
 
@@ -142,7 +203,7 @@ To check if your data is valid:
 - There should be **1654+** items scraped to get all papers.
 - There should be **114** courses.
 
-## NESA HSC Paper upload schedule
+## NESA HSC paper upload schedule
 
 This crawler should be loaded frequently during the HSC exam block to get the
 latest papers. In 2017, papers are usually uploaded **two business days** after
