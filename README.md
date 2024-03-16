@@ -118,9 +118,12 @@ pipenv run scrapy crawl nesapp
 deno run --allow-read --allow-write scripts/merge.ts
 ```
 
-This will overwrite:
+The first command will write:
 
-- `data_new.json`, the data you just scraped;
+- `data_new.json`, the data you just scraped.
+
+The second command will write:
+
 - `data.json`, the data you just scraped merged with old data;
 - `meta.json`, metadata including the scrape time; and
 - `data_list.json`, the list of course items for improved Git diffs.
@@ -148,24 +151,6 @@ This will overwrite:
    Python 3.11: `pipenv install`
 
 </details>
-
-### Sanitising data
-
-The NESA website no longer contains the complete list of documents. An old
-version of data is kept in [data_old.json](./data_old.json) and should not be
-updated. Running the scraper will write to [data_new.json](./data_new.json).
-
-👉 After running the scraper, run the Deno script
-[scripts/merge.ts](./scripts/merge.ts) to create a merged
-[data.json](./data.json) file:
-
-```sh
-deno run --allow-read --allow-write scripts/merge.ts
-```
-
-This will also update [data_list.json](./data_list.json), which makes it easier
-to use Git diff to see which course items were added, and check that none were
-removed.
 
 ### Running on Scrapy Cloud
 

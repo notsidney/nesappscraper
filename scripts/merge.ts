@@ -6,7 +6,7 @@ import {
 } from "https://deno.land/x/lodash@4.17.15-es/lodash.js";
 import type { CourseItem, CoursePack, CourseDoc } from "./types";
 
-const oldData = JSON.parse(Deno.readTextFileSync("./data_old.json"));
+const oldData = JSON.parse(Deno.readTextFileSync("./data.json"));
 const newData = JSON.parse(Deno.readTextFileSync("./data_new.json"));
 
 const uniqCourseNames: string[] = Array.from(
