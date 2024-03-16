@@ -20,7 +20,9 @@ class NesaPPSpider(scrapy.Spider):
         exam_pack_items = []
         # loops through all courses
         for course in response.css('.res-accordion-grp'):
-
+            # check that the accordion actually has content as a direct descendant
+            if (len(course.xpath("./*[contains(@class, 'res-accordion-content')]")) == 0):
+                continue
             # gets course name
             course_name = course.css('.res-heading::text').extract_first().strip()
             # adds to list
