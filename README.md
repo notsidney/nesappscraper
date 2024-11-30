@@ -113,6 +113,9 @@ Note: Each course_item is collapsed into one line.
 
 ## Running the scraper yourself
 
+The scraper currently uses the ScrapeOps proxy. You’ll need to get an API key by signing up at [scrapeops.io](https://scrapeops.io/)
+and set the `SCRAPEOPS_API_KEY` environment variable with your API key.
+
 ```sh
 pipenv run scrapy crawl nesapp
 deno run --allow-read --allow-write scripts/merge.ts

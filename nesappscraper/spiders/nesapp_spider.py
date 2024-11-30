@@ -1,15 +1,17 @@
+import os
 import scrapy
-import logging
-import json
 import re
-
-from scrapy import signals
-from pydispatch import dispatcher
+from urllib.parse import urljoin
+from urllib.parse import parse_qs
 from ..items import exam_pack_item, doc_item
+
+def proxy_url(url):
+    proxy_api_key = os.environ.get('SCRAPEOPS_API_KEY')
+    return f'https://proxy.scrapeops.io/v1/?api_key={proxy_api_key}&url={url}'
 
 class NesaPPSpider(scrapy.Spider):
     name = "nesapp"
-    start_urls = ['http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers']
+    start_urls = [proxy_url('https://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers')]
 
     def parse(self, response):
         # create list of course names
@@ -32,10 +34,14 @@ class NesaPPSpider(scrapy.Spider):
             # loops through all years in each course
             for year in course.css('.res-accordion-content span a'):
                 # extracts link & year for each exam pack
-                exam_pack_link = response.urljoin(
+                exam_pack_link = urljoin(
+                    'https://educationstandards.nsw.edu.au',
                     year.css('::attr(href)').extract_first()
                 )
                 exam_pack_year = year.css('::text').re_first(r'[0-9]{4}')
+
+                if exam_pack_year < '2024':
+                    continue
 
                 # create new exam_pack_item
                 exam_pack_item_current = exam_pack_item(
@@ -46,7 +52,7 @@ class NesaPPSpider(scrapy.Spider):
 
                 # scraper follows this link to each exam pack
                 exam_pack_request = scrapy.Request(
-                    exam_pack_link,
+                    proxy_url(exam_pack_link),
                     callback = self.parse_docs
                 )
 
@@ -64,7 +70,8 @@ class NesaPPSpider(scrapy.Spider):
         for doc in response.css('.right-menu-list a'):
             # append do doc_items list
             doc_items.append( dict( doc_item(
-                doc_link = strip_document_url(response.urljoin(
+                doc_link = strip_document_url(urljoin(
+                    'https://educationstandards.nsw.edu.au',
                     doc.css('::attr(href)').extract_first()
                 )),
                 doc_name = format_doc_name(
@@ -76,7 +83,7 @@ class NesaPPSpider(scrapy.Spider):
         exam_pack_item = response.meta['exam_pack_item']
 
         # use true redirected url for exam pack
-        exam_pack_item['link'] = strip_exam_pack_url(response.url)
+        exam_pack_item['link'] = sanitise_exam_pack_url(response.url)
 
         # add doc_items array to exam_pack_item
         exam_pack_item['docs'] = doc_items
@@ -85,11 +92,12 @@ class NesaPPSpider(scrapy.Spider):
         # settings.
         yield dict(exam_pack_item)
 
-
 # Strips unnecessary data from an exam pack url
-def strip_exam_pack_url(url):
+def sanitise_exam_pack_url(url):
+    sanitised = parse_qs(url)['url'][0]
     # nothing after '/!ut/' is needed
-    return url.split('/!ut/')[0]
+    sanitised = sanitised.split('/!ut/')[0]
+    return sanitised
 
 # Strips unnecessary data from a document url
 def strip_document_url(url):
