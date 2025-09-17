@@ -1,5 +1,11 @@
 # NESA Past Papers Scraper
 
+> [!NOTE]
+> ## Archived on 17 Sep 2025
+> This project has been archived and is no longer in development.
+>
+> Please read the [archive note in the HSC Past Papers repo](https://github.com/notsidney/hscpastpapers/?tab=readme-ov-file#hscpastpapers) for more info.
+
 A web scraper for
 [NESA HSC past paper links](http://educationstandards.nsw.edu.au/wps/portal/nesa/11-12/Understanding-the-curriculum/resources/hsc-exam-papers),
 built with Scrapy on Python 2.7.14
